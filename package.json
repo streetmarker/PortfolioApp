@@ -1,0 +1,103 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --dest ../../firebasics/public/",
+    "lint": "vue-cli-service lint",
+    "cmd": "start C:/Program\\ Files/Git/bin/sh.exe --login"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.1.96",
+    "@types/vue-router": "^2.0.0",
+    "@types/webpack": "^5.28.0",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-e2e-cypress": "^5.0.8",
+    "@vue/cli-plugin-unit-mocha": "^5.0.8",
+    "assert": "^2.0.0",
+    "axios": "^1.2.2",
+    "browserify-zlib": "^0.2.0",
+    "child_process": "^1.0.2",
+    "constants-browserify": "^1.0.0",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
+    "dotenv-webpack": "^8.0.1",
+    "firebase-admin": "^11.4.1",
+    "firebaseui": "^6.0.2",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^11.1.0",
+    "google-auth-library": "^8.7.0",
+    "graceful-fs": "^4.2.10",
+    "https-browserify": "^1.0.0",
+    "net": "^1.0.2",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "querystring": "^0.2.1",
+    "querystring-es3": "^0.2.1",
+    "register-service-worker": "^1.7.2",
+    "retry": "^0.13.1",
+    "retry-request": "^5.0.2",
+    "roboto-fontface": "*",
+    "stream": "^0.0.2",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "tls": "^0.0.1",
+    "url": "^0.11.0",
+    "util": "^0.12.5",
+    "vue": "^3.2.45",
+    "vue-axios": "^3.5.2",
+    "vue-loader": "^17.0.1",
+    "vue-router": "^4.1.6",
+    "vuetify": "^3.0.0-beta.0",
+    "vuex": "^4.1.0",
+    "webfontloader": "^1.6.28",
+    "webpack": "^5.75.0",
+    "wikijs": "^6.4.0"
+  },
+  "devDependencies": {
+    "@types/webfontloader": "^1.6.35",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
+    "@vue/cli-plugin-eslint": "~5.0.8",
+    "@vue/cli-plugin-pwa": "~5.0.8",
+    "@vue/cli-plugin-typescript": "~5.0.8",
+    "@vue/cli-service": "~5.0.8",
+    "@vue/eslint-config-typescript": "^11.0.2",
+    "eslint": "^8.31.0",
+    "eslint-plugin-vue": "^9.8.0",
+    "lint-staged": "^13.1.0",
+    "node-sass": "^8.0.0",
+    "sass-loader": "^13.2.0",
+    "typescript": "~4.9.4",
+    "vue-cli-plugin-vuetify": "~2.5.8",
+    "webpack-plugin-vuetify": "^2.0.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended",
+      "@vue/typescript/recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2020
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue,ts,tsx}": "vue-cli-service lint"
+  }
+}
