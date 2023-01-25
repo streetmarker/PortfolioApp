@@ -1,4 +1,4 @@
-https://justfirstsite.web.app/hello
+https://justfirstsite.web.app
 # my-app
 
 ## Project setup
