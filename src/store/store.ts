@@ -62,7 +62,7 @@ const store: StoreOptions<RootState> = {
         return
       }
       commit ('SET_USER', auth.currentUser)
-      router.push({ name: 'HelloWorld' })
+      router.push({ name: 'Dashboard' })
     },
     async register ({ commit }, details) {
       const { email, password } = details
@@ -92,14 +92,14 @@ const store: StoreOptions<RootState> = {
         return
       }
       commit ('SET_USER', auth.currentUser)
-      router.push('/hello')
+      router.push({ name: 'Dashboard' })
     },
     async logout ({ commit }) {
       await signOut(auth)
 
       commit('CLEAR_USER')
 
-      router.push('/')
+      router.push({ name: 'Dashboard' })
     },
 
     fetchUser ({ commit }) {
@@ -110,7 +110,7 @@ const store: StoreOptions<RootState> = {
           commit('SET_USER', user)
 
           if (router.isReady() && router.currentRoute.value.path === '/' ) {
-            router.push('/hello')
+            router.push({ name: 'Dashboard' })
           }
         }
       })

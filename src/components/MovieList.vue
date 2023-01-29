@@ -94,21 +94,13 @@ export default {
     }
     },
     async increment() {
-      
       this.$store.commit('incrementNum');
       firestore.write(this.counterObj.day == new Date().getDate() ? this.$store.state.counter : 0, new Date().getDate())
       this.getData()
     },
     async getData(){
-      // this.counterObj = JSON.stringify(await firestore.read())
-      // // this.counterObj = JSON.parse(this.counterObj)
-      // console.log(JSON.parse(this.counterObj).value)
-      // this.$store.state.counter = JSON.parse(this.counterObj).value
-
-      // console.log(data)
       this.counterObj = await firestore.read()
       this.$store.state.counter = this.counterObj.value
-      // return await firestore.read()
     },
   },
   computed: {
@@ -118,7 +110,6 @@ export default {
     //
   },
   mounted() {
-    // this.$store.state.counter = await firestore.read()
     this.getData()
   },
 };

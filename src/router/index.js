@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HelloWorld from '../components/HelloWorld.vue';
+import SiteDashboard from '../components/SiteDashboard.vue'
 import MovieList from '../components/MovieList.vue';
 import LoginTmp from '../components/LoginTmp.vue'
 import WikiPage from '../components/WikiPage.vue';
@@ -15,11 +16,11 @@ const routes = [
     }
   },
   {
-    path: '/hello',
-    name: 'HelloWorld',
-    component: HelloWorld,
+    path: '/landing',
+    name: 'Dashboard',
+    component: SiteDashboard,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -27,7 +28,7 @@ const routes = [
     name: 'MovieList',
     component: MovieList,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -35,7 +36,7 @@ const routes = [
     name: 'Wiki',
     component: WikiPage,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
 ]
