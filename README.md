@@ -18,3 +18,4 @@ możliwwości dzięki
 - baza danych firestore
 
 [Click Here](https://justfirstsite.web.app)
+https://placehold.it/150/ffffff/ff0000?text=hello
