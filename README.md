@@ -7,7 +7,7 @@ technologie:
 - Webpack
 - PWA
 
-możliwwości dzięki $\textcolor{yello}{\text{Firebase}}$
+możliwwości dzięki $\textcolor{yellow}{\text{Firebase}}$
 - autoryzacja przez mail
 - baza danych firestore
 
