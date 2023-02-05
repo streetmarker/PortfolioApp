@@ -12,16 +12,17 @@ export interface RootState {
   // tutaj umieść pola store'a
   counter: number
   user: null
+  reportTable:``
 }
 
 const store: StoreOptions<RootState> = {
   state: {
     // tutaj ustaw wartości początkowe dla pól store'a
     counter: 0,
-    user: null // auth
+    user: null, // auth
+    reportTable:``//
   },
   mutations: {
-    // tutaj umieść mutacje
     setMyVariable(state, newValue: number) {
       state.counter = newValue;
     },
@@ -33,10 +34,12 @@ const store: StoreOptions<RootState> = {
     },
     CLEAR_USER (state) {
       state.user = null
-    }
+    },
+    setReport(state, html){ // mail
+      state.reportTable = html;
+    },
   },
   actions: {
-    // tutaj umieść akcje
     async login ({ commit }, details) { // auth
       const { email, password } = details
 
@@ -114,6 +117,10 @@ const store: StoreOptions<RootState> = {
           }
         }
       })
+    },
+    ////////////////////////////////////////
+    reportMail () {
+      //
     }
   },
   modules: {

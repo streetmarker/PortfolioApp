@@ -10,6 +10,7 @@
                   border="start"
                   density="default"
                   type="warning"
+                  variant="outlined"
                   color="light-green"
                 >
                   Integrations like Send Mail are <strong>limited</strong> to 15/day,
@@ -41,7 +42,6 @@
 
         <v-card-text class="white--text">
           {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-          <!-- <div v-if="`${process.env.NODE_ENV}`==='development'">{{ this.counter }}</div>  -->
         </v-card-text>
       </v-card>
     </v-footer>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import requestCounter from '../helpers/requestCounter'
+// import requestCounter from '../helpers/requestCounter'
 import firestore from '../fireconf'
 
 export default {
@@ -63,8 +63,6 @@ export default {
         icon: "mdi-linkedin",
         link: "https://www.linkedin.com/in/micha%C5%82-jaro%C5%84-8a9679152/",
       },
-      // 'mdi-facebook',
-      // 'mdi-twitter',
     ],
     padless: false,
     variant: "default",
@@ -85,19 +83,11 @@ export default {
   },
   methods: {
     async setCounter(){
-      // this.counter = firestore.listen();
-      // console.log(this.counter)
       this.counter = await firestore.read();
     }
   },
-  // watch: {
-  //   counter(newCounter, oldCounter) {
-  //     this.setCounter();
-  //   }    
-  // },
   created(){
     this.setCounter()
-    // this.counter = firestore.listen();
   }
 };
 </script>

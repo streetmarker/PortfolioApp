@@ -16,25 +16,27 @@
                     <v-btn @click="increment()">POST</v-btn>
                     </div>
 
-                    <v-alert v-if="this.counterObj.value>=this.limit" type="error">dayily limit :(</v-alert>
+                    <v-alert v-if="this.counterObj.value>=this.limit" type="error">Daily limit reached :(</v-alert>
                 </v-form>
             </v-card>
         </v-col>
     </v-row>
     Searched today: {{ this.counterObj.value }}
     <v-container>
-      <v-row align="center" justify="center">
-        <v-col cols="12" sm="8" md="4">
-          <v-card v-for="movie in movies" :key="movie.Title">
+      <!-- <v-row align="center" justify="center"> -->
+        <div class="card-grid">
+        <!-- <v-col cols="12" sm="8" md="4"> -->
+          <v-card class="card" v-for="movie in movies" :key="movie.Title">
             <v-toolbar color="primary" dark>
               <v-toolbar-title>{{ movie.Title }}</v-toolbar-title>
             </v-toolbar>
             <v-card-text>{{ movie.Year }}</v-card-text>
             <v-card-text>{{ movie.Type }}</v-card-text>
-            <v-img :src="movie.Poster" width="200" height="300"></v-img>
+            <v-img :src="movie.Poster" height="300"></v-img>
           </v-card>
-        </v-col>
-      </v-row>
+        <!-- </v-col> -->
+      </div>
+      <!-- </v-row> -->
     </v-container>
 </template>
 
@@ -54,7 +56,7 @@ export default {
         v => !!v || 'This is required',
         v => v.length >= 3 || 'Title length at least 3 characters',
       ],
-      limit:10,
+      limit:15,
       env: `${process.env.NODE_ENV}`
     }),
   // },
@@ -116,6 +118,27 @@ export default {
 </script>
 
 <style>
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 16px;
+  justify-content: center;
+  justify-items: center;
+}
+
+.card {
+  width: 100%;
+  width: calc(50% - 8px);
+  margin: 8px;
+}
+
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 .movie-list {
   display: flex;
   flex-wrap: wrap;

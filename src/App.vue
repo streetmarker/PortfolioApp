@@ -35,8 +35,9 @@ declare module 'vue/types/vue' {
       </v-container>
       <v-spacer></v-spacer>
     </v-main>
-    <SendMail v-if="this.$store.state.user" :address="this.$store.state.user.email" />
-    <v-text-field v-if="!this.$store.state.user" disabled>Log in to send mail </v-text-field>
+    <!-- TODO lepsza obsługa widoczności maila -->
+    <SendMail v-if="this.$store.state.user" :address="this.$store.state.user" />
+    <v-text-field variant="plain" v-if="!this.$store.state.user" disabled>Log in to send mail </v-text-field>
     <VueFooter />
   </v-app>
 </template>
@@ -91,6 +92,9 @@ export default defineComponent({
     calculateName() {
       return this.$store.state.user.email.slice(0,this.$store.state.user.email.indexOf('@'))
     },
+    mail() {
+      return this.$store.state.user.email ? this.$store.state.user.email : "";
+    }
     // currentView() {
     //   return routes[this.currentPath.slice(1) || '/']// || NotFound
     // }
