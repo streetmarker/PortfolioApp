@@ -7,9 +7,11 @@ import { loadFonts } from './plugins/webfontloader'
 import router from './router'
 import store from './store/store';
 import { register } from './registerServiceWorker'
+// import * as dotenv from 'dotenv'
 
 loadFonts()
 register
+// dotenv.config() // .config()
 
 createApp(App)
   .use(store)

@@ -6,7 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --dest ../../firebasics/public/",
     "lint": "vue-cli-service lint",
-    "cmd": "start C:/Program\\ Files/Git/bin/sh.exe --login"
+    "cmd": "start C:/Program\\ Files/Git/bin/sh.exe --login",
+    "deploy": "cd ../../firebasics/public & firebase deploy --only hosting -m \"auto deploy\"",
+    "full": "npm run build & npm run deploy"
   },
   "dependencies": {
     "@mdi/font": "^7.1.96",
@@ -17,11 +19,13 @@
     "@vue/cli-plugin-unit-mocha": "^5.0.8",
     "assert": "^2.0.0",
     "axios": "^1.2.2",
+    "bad-words": "^3.0.4",
     "browserify-zlib": "^0.2.0",
     "child_process": "^1.0.2",
     "constants-browserify": "^1.0.0",
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
+    "dotenv": "^16.0.3",
     "dotenv-webpack": "^8.0.1",
     "exceljs": "^4.3.0",
     "firebase-admin": "^11.4.1",
@@ -51,7 +55,7 @@
     "vue-axios": "^3.5.2",
     "vue-loader": "^17.0.1",
     "vue-router": "^4.1.6",
-    "vuetify": "^3.0.0-beta.0",
+    "vuetify": "^3.1.5",
     "vuex": "^4.1.0",
     "webfontloader": "^1.6.28",
     "webpack": "^5.75.0",
@@ -59,6 +63,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@iconify/vue": "^4.1.0",
     "@types/webfontloader": "^1.6.35",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",

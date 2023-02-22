@@ -13,6 +13,7 @@ export interface RootState {
   counter: number
   user: null
   reportTable:``
+  movies: []
 }
 
 const store: StoreOptions<RootState> = {
@@ -20,9 +21,13 @@ const store: StoreOptions<RootState> = {
     // tutaj ustaw wartości początkowe dla pól store'a
     counter: 0,
     user: null, // auth
-    reportTable:``//
+    reportTable:``,
+    movies:[]
   },
   mutations: {
+    catchMovies(state, movies: []){
+      state.movies = movies
+    },
     setMyVariable(state, newValue: number) {
       state.counter = newValue;
     },

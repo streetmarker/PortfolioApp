@@ -1,5 +1,10 @@
 <template>
-  <h2>COVID-19 Europe Status</h2>
+    <v-toolbar
+    color="secondary"
+    :elevation="24"
+    title="😷 Covid Report"
+    ></v-toolbar>
+    
   <div>
     <!-- <v-btn icon="mdi-refresh" color="primary" @click="this.getEuropeData()"></v-btn> -->
     <br />
@@ -40,23 +45,29 @@
         </tr>
       </tbody>
     </v-table>
-    <v-toolbar color="light">
-    <v-btn
+    <br>
+<v-row no-gutters>
+    <v-toolbar color="light-grey" style="height: 100px;">
+        
+      <v-btn
       stacked
       variant="plain"
       append-icon="mdi-file"
       color="#21A366"
       @click="generateExcel()"
-      >Download Excel</v-btn
-    ></v-toolbar><v-btn @click="getZlecenia()">{{ test }}</v-btn>
-  </div>
+      >Download Excel</v-btn>
+    <SendMail />
+  
+  </v-toolbar></v-row>
+    </div>
 </template>
 
 <script>
 import { useStore } from "vuex";
 import * as XLSX from "xlsx/xlsx.mjs";
 import axios from 'axios'; // tmp
-const API_URL = 'http://localhost:3000/zlecenia';
+import SendMail from './SendMail.vue'
+
 
 export default {
   name: "LifeIsMemeSiteDashboard",
@@ -69,6 +80,9 @@ export default {
       test:{}
     };
   },
+  components: {
+    SendMail,
+  },
   setup() {
     useStore();
   },
@@ -77,38 +91,15 @@ export default {
   },
 
   methods: {
-    
-    async getZlecenia() {
-      try {
-        const response = await axios.get(API_URL);
-        console.log(response);
-        const zlecenia = response.data;
-        console.log(zlecenia);
-        this.test = zlecenia;
-      } catch (error) {
-        if (error.response) {
-          console.error(error.response.data);
-          console.error(error.response.status);
-          console.error(error.response.headers);
-        } else if (error.request) {
-          console.error(error.request);
-        } else {
-          console.error('Error', error.message);
-        }
-      }
-    },
     async getEuropeData() {
       const options = {
         method: "GET",
         url: "https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/europe",
         headers: {
-          "X-RapidAPI-Key":
-            "c760435012msh8d411278365a25ap1b49cfjsnc37ca6960a24",
-          "X-RapidAPI-Host":
-            "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com",
+          "X-RapidAPI-Key": process.env.VUE_APP_RAPIDAPI_KEY,
+          "X-RapidAPI-Host": process.env.VUE_APP_RAPIDAPI_HOST_COVID,
         },
       };
-      // try {
       const response = await this.$http
         .request(options)
         .then(function (response) {
@@ -118,10 +109,6 @@ export default {
           console.error(error);
           return error;
         });
-      // console.log(response);
-      // } catch (error) {
-      //   console.log(error)
-      // }
       try {
         response.sort((a, b) => {
           return a.rank - b.rank;
@@ -156,6 +143,7 @@ export default {
               <td>${parseFloat(element.Population).toLocaleString("en-US")}</td>
               </tr>
               </tbody>
+              <style>table {  border-collapse: collapse;  width: 100%;  max-width: 800px;  margin: 0 auto;  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);  background-color: #fff;  font-family: 'Roboto', sans-serif;}table th,table td {  padding: 1rem;  text-align: left;}table th {  background-color: #f2f2f2;font-weight: bold;  color: #444;}table td {  border-bottom: 1px solid #f2f2f2;}table tr:hover {  background-color: #f5f5f5;}</style>
               `;
         });
         this.html+=`

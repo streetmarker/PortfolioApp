@@ -4,8 +4,8 @@
   >
     <template v-slot:activator="{ props }">
       <v-btn
-        color="primary"
-        variant="tonal"
+        color="secondary"
+        variant="flat"
         v-bind="props"
         prepend-icon="mdi-account-circle"
       >{{name}}</v-btn>
@@ -13,8 +13,8 @@
     <template v-slot:default="{ isActive }">
       <v-card>
         <v-toolbar
-          color="primary"
-          title="Opening from the bottom"
+          color="secondary"
+          title="Profile"
         ></v-toolbar>
         <v-card-text>
           <div class="text-h2 pa-12">Hello {{name}}!</div>

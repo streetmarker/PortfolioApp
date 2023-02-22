@@ -4,7 +4,6 @@
       
       <v-expansion-panels
       v-model="panel"
-      :disabled="disabled"
       multiple
       >
       <v-expansion-panel>

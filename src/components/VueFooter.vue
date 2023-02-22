@@ -1,32 +1,33 @@
 <template>
-  <v-card>
-    <v-footer v-bind="localAttrs" :padless="padless">
-      <v-card flat tile width="100%" class="red lighten-1 text-center">
+  <!-- <div color="primary"></div> -->
+  <v-card color="primary">
+    <v-footer color="primary" v-bind="localAttrs" :padless="padless">
+      <v-card color="primary" flat tile width="100%" class="red lighten-1 text-center">
         <v-card-text>
           <v-row no-gutters>
-            <v-col cols="12" sm="4">
-              <v-sheet class="ma-2 pa-2">
+            <v-col  cols="12" sm="4">
+              <v-sheet class="ma-2 pa-2" color="primary">
                 <v-alert
                   border="start"
                   density="default"
                   type="warning"
-                  variant="outlined"
-                  color="light-green"
+                  color="secondary"
+                  closable
                 >
                   Integrations like Send Mail are <strong>limited</strong> to 15/day,
-                  today was made: <strong>{{ counter.value }}</strong> times.
+                  today was made: <strong>{{ integrationsCounter.value }}</strong> times.
                 </v-alert>
               </v-sheet>
             </v-col>
             <v-col cols="12" sm="4">
-              <v-sheet class="ma-2 pa-2">
+              <v-sheet class="ma-2 pa-2" color="primary">
                 <v-btn
                   v-for="button in buttons"
                   :key="button"
                   class="mx-4"
                   icon
                   :href="button.link"
-                  color="primary"
+                  color="secondary"
                 >
                   <v-icon size="24px">
                     {{ button.icon }}
@@ -51,6 +52,8 @@
 <script>
 // import requestCounter from '../helpers/requestCounter'
 import firestore from '../fireconf'
+import { mapState } from 'vuex';
+
 
 export default {
   data: () => ({
@@ -66,9 +69,11 @@ export default {
     ],
     padless: false,
     variant: "default",
-    counter:{day:0, value:0}
+    integrationsCounter:{day:0, value:0}
   }),
   computed: {
+    ...mapState(['counter']),
+
     localAttrs() {
       const attrs = {};
 
@@ -81,10 +86,16 @@ export default {
       return attrs;
     },
   },
+  watch: {
+    counter(newVal, oldVal) {
+      // wykonywanie akcji w odpowiedzi na zmiany w myStoreValue
+      this.setCounter();
+    }
+  },
   methods: {
     async setCounter(){
-      this.counter = await firestore.read();
-    }
+      this.integrationsCounter = await firestore.read();
+    },
   },
   created(){
     this.setCounter()

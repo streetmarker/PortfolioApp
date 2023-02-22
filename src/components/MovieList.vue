@@ -1,17 +1,18 @@
 <template>
     <v-row align="center" justify="center">
-      <v-col cols="12" sm="8" md="4">
-        <v-card class="elevation-12">
-              
+      <ActorsList/>
+    <v-col cols="10" sm="6" md="2">
+      <!-- <v-text-field variant="solo">Searched today: {{ this.counterObj.value }}</v-text-field> -->
+    </v-col>
+      <v-col cols="10" sm="8" md="6">
+        <v-card class="elevation-12" >
+              <v-card-title style="background-color: #00BFA5;">🍿 Serch for a movie</v-card-title>
                 <v-form ref="form" @submit.prevent="searchMovies" >
-                    <v-text-field :rules="titleRule" label="Film title" :counter="3" type="text" v-model="query" required />
+                    <v-text-field placeholder="Type here" :rules="titleRule" label="Film title" :counter="3" type="text" v-model="query" required />
                     <v-card-actions>
                         <v-btn color="secondary" type="submit">Search</v-btn>
                     </v-card-actions>
-                    <!-- {{ this.$store.state.counter }} -->
-                    <!-- <p :v-bind="getData()"></p> -->
-                    <!-- {{ this.$store.state.counter }} -->
-                    <div v-if="this.env==='development'">
+                    <div v-if="process.env.NODE_ENV==='development'">
                       <v-btn @click="getData()">GET</v-btn>
                     <v-btn @click="increment()">POST</v-btn>
                     </div>
@@ -20,19 +21,22 @@
                 </v-form>
             </v-card>
         </v-col>
+        <v-col cols="10" sm="6" md="2">
+      <!-- <v-text-field variant="solo">Searched today: {{ this.counterObj.value }}</v-text-field> -->
+    </v-col>
     </v-row>
-    Searched today: {{ this.counterObj.value }}
     <v-container>
       <!-- <v-row align="center" justify="center"> -->
         <div class="card-grid">
         <!-- <v-col cols="12" sm="8" md="4"> -->
-          <v-card class="card" v-for="movie in movies" :key="movie.Title">
-            <v-toolbar color="primary" dark>
-              <v-toolbar-title>{{ movie.Title }}</v-toolbar-title>
+          <v-card class="card" v-for="movie in this.$store.state.movies" :key="movie.title">
+            <v-toolbar color="secondary" dark>
+              <v-toolbar-title>{{ movie.title }}</v-toolbar-title>
             </v-toolbar>
-            <v-card-text>{{ movie.Year }}</v-card-text>
-            <v-card-text>{{ movie.Type }}</v-card-text>
-            <v-img :src="movie.Poster" height="300"></v-img>
+            <v-card-text>{{ movie.year }}</v-card-text>
+            <v-card-text>{{ movie.titleType }}</v-card-text>
+            <v-img v-if="movie.image" :src="movie.image.url" fill-height></v-img>
+            <v-img v-else-if="!movie.image" src="https://micras.org/wiki/images/7/78/Image_placeholder.jpg"></v-img>
           </v-card>
         <!-- </v-col> -->
       </div>
@@ -42,12 +46,17 @@
 
 <script>
 import firestore from '../fireconf'
+import { useStore } from "vuex";
+import ActorsList from './ActorsList.vue'
 
 export default {
+  components:{
+    ActorsList
+  },
   data: () => ({
-    // return {
       query: "",
-      movies: [],
+      tmpMovies:[],
+      movies:[],
       error: '',
       counter: 0,
       counterObj: {day:0,value:0},
@@ -57,9 +66,11 @@ export default {
         v => v.length >= 3 || 'Title length at least 3 characters',
       ],
       limit:15,
-      env: `${process.env.NODE_ENV}`
     }),
-  // },
+    setup() {
+    useStore();
+
+  },
   methods: {
     async searchMovies() {
       if(this.counterObj.value<this.limit && this.query.length>3){
@@ -68,31 +79,31 @@ export default {
 
         const options = {
           method: "GET",
-          url: "https://movie-database-alternative.p.rapidapi.com/",
-          params: { s: this.query, r: "json", page: "1" },
+          url: "https://online-movie-database.p.rapidapi.com/title/v2/find",
+          params: { title: this.query, limit: '10', sortArg: 'moviemeter,asc' },
           headers: {
-            "X-RapidAPI-Key":
-              "c760435012msh8d411278365a25ap1b49cfjsnc37ca6960a24",
-            "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
+            "X-RapidAPI-Key": process.env.VUE_APP_RAPIDAPI_KEY,
+            "X-RapidAPI-Host": process.env.VUE_APP_RAPIDAPI_HOST_OMD,
           },
         };
 
         const response = await this.$http
           .request(options)
           .then(function (response) {
-            // console.log(response.data.Search);
-            return response.data.Search;
+            // console.log(response.data);
+            return response.data.results;
           })
           .catch(function (error) {
             console.error(error);
             return error;
           });
       try{
-          this.movies = response;
-          console.log(this.movies);
+          this.tmpMovies = response;
+          // console.log(this.movies);
       }  catch(e){
           this.error = response;
       }
+      this.$store.commit('catchMovies', this.tmpMovies); // save to Store
     }
     },
     async increment() {
@@ -112,7 +123,7 @@ export default {
     //
   },
   mounted() {
-    this.getData()
+    this.getData();
   },
 };
 </script>

@@ -4,6 +4,7 @@ import SiteDashboard from '../components/SiteDashboard.vue'
 import MovieList from '../components/MovieList.vue';
 import LoginTmp from '../components/LoginTmp.vue'
 import WikiPage from '../components/WikiPage.vue';
+import OverallCommentBox from '../components/OverallCommentBox.vue';
 import { auth } from '../fireconf'
 
 const routes = [
@@ -35,6 +36,14 @@ const routes = [
     path: '/wiki',
     name: 'Wiki',
     component: WikiPage,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/overallComm',
+    name: 'OverallCommentBox',
+    component: OverallCommentBox,
     meta: {
       requiresAuth: false
     }

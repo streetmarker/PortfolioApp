@@ -1,57 +1,40 @@
 <template>
-  <div>
+  <!-- <div> -->
     <div id="loading-screen" v-if="this.wait" @transitionend="transitionEnd">
       <div :style="elementStyles" class="loading-icon"></div>
     </div>
     <v-row no-gutters>
-      <v-col cols="12" sm="4"> </v-col>
-      <v-col cols="12" sm="5">
-        <v-row>
-          <!-- <v-toolbar color="light"> -->
-          <!-- <v-btn
-            stacked
-            variant="plain"
-            append-icon="mdi-file"
-            color="#1D6F42"
-            @click="generateExcel()"
-            >Download Excel</v-btn
-          > -->
-          <v-btn
-            stacked
-            variant="plain"
-            append-icon="mdi-mail"
-            @click="sendMail()"
-            color="primary"
-            :disabled="
-              this.counter.value >= 15 ||
-              this.$store.state.reportTable.length == 0
-            "
-            >Send Report on {{ this.$store.state.user.email }}</v-btn
-          >
-          <v-text-field
-            prepend-icon="mdi-or"
-            variant="plain"
-            label="Or type in custom mail"
-            v-model="anotherMail"
-            append-icon="mdi-send"
-            @click:append="sendMail"
-          ></v-text-field>
-        <!-- </v-toolbar> -->
-        </v-row>
-      </v-col>
+      <v-btn
+        stacked
+        variant="plain"
+        append-icon="mdi-mail"
+        @click="sendMail()"
+        color="primary"
+        v-if="this.$store.state.user"
+        :disabled="
+          this.counter.value >= 15 || this.$store.state.reportTable.length == 0
+        "
+        >Send Report on {{ this.$store.state.user.email }}</v-btn>
+      <v-text-field
+        @keydown.enter="sendMail"
+        style="max-width:20vh"
+        label="Type in custom mail"
+        v-model="anotherMail"
+        variant="solo"
+        append-icon="mdi-send"
+        @click:append="sendMail"
+      ></v-text-field>
     </v-row>
-  </div>
-  <br>
+      <!-- </div> -->
 </template>
 
 <script>
 import requestCounter from "../helpers/requestCounter";
 import { useStore } from "vuex";
-// import * as XLSX from "xlsx/xlsx.mjs";
+import * as XLSX from "xlsx/xlsx.mjs";
 
 export default {
   name: "LifeIsMemeSendMail",
-  props: ["address"],
   data() {
     return {
       counter: {
@@ -80,9 +63,22 @@ export default {
 
   methods: {
     async sendMail() {
-      let mail = this.anotherMail.length > 0 ? this.anotherMail : this.address;
+      let mail =
+        this.anotherMail.length > 0
+          ? this.anotherMail
+          : this.$store.state.user.email;
       // console.log(mail);
       let html = this.$store.state.reportTable; // pobranie kodu z raportu
+      ///// TODO
+      const ttable_html = this.$store.state.reportTable;
+      const table_html = btoa(ttable_html);
+      // const doc = new DOMParser().parseFromString(table_html, "text/xml");
+      // const workbook = XLSX.utils.table_to_book(doc);
+      // // const excel = XLSX.writeFileXLSX(workbook, "Covid Report.xlsx");
+      // const excel = XLSX.write(workbook ,{type: 'binary'});
+      // console.log(table_html);
+      ////////////////
+
       html = html
         .split("")
         .filter((char) => !["\n"].includes(char))
@@ -93,11 +89,12 @@ export default {
           url: "https://rapidprod-sendgrid-v1.p.rapidapi.com/mail/send",
           headers: {
             "content-type": "application/json",
-            "X-RapidAPI-Key":
-              "c760435012msh8d411278365a25ap1b49cfjsnc37ca6960a24",
-            "X-RapidAPI-Host": "rapidprod-sendgrid-v1.p.rapidapi.com",
+            "X-RapidAPI-Key": process.env.VUE_APP_RAPIDAPI_KEY,
+            "X-RapidAPI-Host": process.env.VUE_APP_RAPIDAPI_HOST_MAIL,
           },
-          data: `{"personalizations":[{"to":[{"email":"${mail}"}],"subject":"Life Is Meme!"}],"from":{"email":"sadfrog@example.com"},"content":[{"type":"text/html","value":"<h3>COVID Report</h3><div>${html}</div>"}]}`,
+          //,"attachments":[{"content":"${table_html}","filename":"report.html","type":"text/html","disposition":"attachment"}]}`,
+          data: `{"personalizations":[{"to":[{"email":"${mail}"}],"subject":"Life Is Meme!"}],"from":{"email":"sadfrog@example.com"},"content":[{"type":"text/html","value":"<h3>COVID Report</h3>"}],"attachments":[{"content":"${table_html}","filename":"report.html","type":"text/html","disposition":"attachment"}]}`,
+          //"attachments":[{"content":"${excel}","filename":"Report.xlsx","contentType":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","disposition":"attachment"}]}`,
         };
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -120,7 +117,9 @@ export default {
       setTimeout(() => {
         this.wait = false;
       }, 2000);
-      mail = '';
+      mail = "";
+
+      this.$store.commit("incrementNum");
     },
     transitionEnd() {
       if (!this.wait) {
@@ -129,7 +128,7 @@ export default {
     },
     // generateExcel() {
     //   const html = this.$store.state.reportTable;
-    //   const doc = new DOMParser().parseFromString(html, "text/xml");
+    //   const doc = new DOMParser().parseFromString(html, 'text/xml");
     //   const workbook = XLSX.utils.table_to_book(doc);
     //   XLSX.writeFileXLSX(workbook, "Covid Report.xlsx");
     // },
@@ -173,5 +172,8 @@ export default {
   100% {
     transform: rotate(360deg);
   }
+}
+.v-text-field {
+  min-width: 230px;
 }
 </style>
