@@ -6,7 +6,7 @@
         <v-card-text>
           <v-row no-gutters>
             <v-col  cols="12" sm="4">
-              <v-sheet class="ma-2 pa-2" color="primary">
+              <!-- <v-sheet class="ma-2 pa-2" color="primary">
                 <v-alert
                   border="start"
                   density="default"
@@ -17,7 +17,7 @@
                   Integrations like Send Mail are <strong>limited</strong> to 15/day,
                   today was made: <strong>{{ integrationsCounter.value }}</strong> times.
                 </v-alert>
-              </v-sheet>
+              </v-sheet> -->
             </v-col>
             <v-col cols="12" sm="4">
               <v-sheet class="ma-2 pa-2" color="primary">
