@@ -6,18 +6,18 @@
     </v-col>
       <v-col cols="10" sm="8" md="6">
         <v-card class="elevation-12" >
-              <v-card-title style="background-color: #00BFA5;">🍿 Serch for a movie</v-card-title>
+              <v-card-title>🍿 Serch for a movie</v-card-title>
                 <v-form ref="form" @submit.prevent="searchMovies" >
                     <v-text-field placeholder="Type here" :rules="titleRule" label="Film title" :counter="3" type="text" v-model="query" required />
                     <v-card-actions>
                         <v-btn color="secondary" type="submit">Search</v-btn>
                     </v-card-actions>
-                    <div v-if="process.env.NODE_ENV==='development'">
+                    <!-- <div v-if="process.env.NODE_ENV==='development'">
                       <v-btn @click="getData()">GET</v-btn>
                     <v-btn @click="increment()">POST</v-btn>
-                    </div>
+                    </div> -->
 
-                    <v-alert v-if="this.counterObj.value>=this.limit" type="error">Daily limit reached :(</v-alert>
+                    <v-alert v-if="disable" type="error">API limit reached 😓</v-alert>
                 </v-form>
             </v-card>
         </v-col>
@@ -66,6 +66,7 @@ export default {
         v => v.length >= 3 || 'Title length at least 3 characters',
       ],
       limit:15,
+      disable:false,
     }),
     setup() {
     useStore();
@@ -73,7 +74,7 @@ export default {
   },
   methods: {
     async searchMovies() {
-      if(this.counterObj.value<this.limit && this.query.length>3){
+      if(this.query.length > 3){
         await this.$refs.form.validate();
         this.increment();
 
@@ -108,13 +109,23 @@ export default {
     },
     async increment() {
       this.$store.commit('incrementNum');
-      firestore.write(this.counterObj.day == new Date().getDate() ? this.$store.state.counter : 0, new Date().getDate())
-      this.getData()
+      // firestore.write(this.counterObj.day == new Date().getDate() ? this.$store.state.counter : 0, new Date().getDate()) // OLD
+      firestore.writeMovieNew(this.counterObj.value + 1, new Date().getDate())
+      this.getCounter()
     },
-    async getData(){
-      this.counterObj = await firestore.read()
-      this.$store.state.counter = this.counterObj.value
-    },
+    // async getData(){ // OLD
+    //   this.counterObj = await firestore.read()
+    //   this.$store.state.counter = this.counterObj.value
+    // },
+    async getCounter(){
+            this.counterObj = await firestore.readMovieNew()
+            if(this.counterObj.value >= 400){ // API LIMIT
+                this.disable = true;
+            }
+            if( new Date().getDate() == 16 ){ // reset on 16th
+                firestore.writeMovieNew(0, new Date().getDate())
+            }
+        },
   },
   computed: {
     //
@@ -123,7 +134,8 @@ export default {
     //
   },
   mounted() {
-    this.getData();
+    this.getCounter();
+    // console.log(process.env.VUE_APP_NODE_ENV)
   },
 };
 </script>

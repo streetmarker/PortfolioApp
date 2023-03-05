@@ -15,6 +15,7 @@
           this.counter.value >= 15 || this.$store.state.reportTable.length == 0
         "
         >Send Report on {{ this.$store.state.user.email }}</v-btn>
+<!-- <div style="padding-top: 30px;"> -->
       <v-text-field
         @keydown.enter="sendMail"
         style="max-width:20vh"
@@ -24,7 +25,8 @@
         append-icon="mdi-send"
         @click:append="sendMail"
       ></v-text-field>
-    </v-row>
+    <!-- </div> -->
+  </v-row>
       <!-- </div> -->
 </template>
 

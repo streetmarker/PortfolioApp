@@ -11,12 +11,12 @@
     <v-col cols="12" sm="4">
       <v-alert
         v-if="this.report.length == 0"
+        title="Connection error"
         border="start"
-        variant="outlined"
         density="default"
         type="error"
       >
-        Connection error, please try again later on contact administrator
+        Please try again later
       </v-alert>
     </v-col>
     <v-table fixed-header height="500px">
@@ -46,9 +46,9 @@
       </tbody>
     </v-table>
     <br>
-<v-row no-gutters>
-    <v-toolbar color="light-grey" style="height: 100px;">
-        
+<!-- <v-row no-gutters> -->
+    <v-toolbar color="light-grey" style="height: 100px; padding-top: 20px;">
+        <v-row no-gutters>
       <v-btn
       stacked
       variant="plain"
@@ -57,8 +57,9 @@
       @click="generateExcel()"
       >Download Excel</v-btn>
     <SendMail />
-  
-  </v-toolbar></v-row>
+  </v-row>
+  </v-toolbar>
+<!-- </v-row> -->
     </div>
 </template>
 
@@ -106,7 +107,7 @@ export default {
           return response.data;
         })
         .catch(function (error) {
-          console.error(error);
+          console.log(error);
           return error;
         });
       try {

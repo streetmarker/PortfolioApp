@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div>
+        <!-- <div v-if="process.env=='development'">
             <button @click="close">open</button>
             <transition name="fade">
             <div v-if="test">
                 <button @click="close">close</button>
             </div>
         </transition>
-        </div>
+        </div> -->
         <v-card>
             <!-- <v-form> -->
             <v-text-field

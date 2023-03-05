@@ -4,6 +4,7 @@ import SiteDashboard from '../components/SiteDashboard.vue'
 import MovieList from '../components/MovieList.vue';
 import LoginTmp from '../components/LoginTmp.vue'
 import WikiPage from '../components/WikiPage.vue';
+import RentBike from '../components/RentBike.vue'
 import OverallCommentBox from '../components/OverallCommentBox.vue';
 import { auth } from '../fireconf'
 
@@ -33,9 +34,9 @@ const routes = [
     }
   },
   {
-    path: '/wiki',
-    name: 'Wiki',
-    component: WikiPage,
+    path: '/bikes',
+    name: 'Bikes',
+    component: RentBike,
     meta: {
       requiresAuth: false
     }

@@ -11475,10 +11475,10 @@
     "@vue/server-renderer" "3.2.45"
     "@vue/shared" "3.2.45"
 
-"vuetify@^3.0.0-beta.4", "vuetify@^3.1.5":
-  "integrity" "sha512-6DJYNuKrbxuL+MThmj+VbtvK9X3mY+s8Rqj1juj4RyeLSIAhE3byZf8Bo2/GxrU5Jv3zR07LZdpiq4wIl0ONzA=="
-  "resolved" "https://registry.npmjs.org/vuetify/-/vuetify-3.1.5.tgz"
-  "version" "3.1.5"
+"vuetify@^3.0.0-beta.4", "vuetify@^3.1.6":
+  "integrity" "sha512-4We27L5ksy8esNKfUPWPucEU+M7XJDO2o66zXL5qiBVbALwshcK2CAobLQMx+ALtkLENXAYNH3RzvfAYjTi3Aw=="
+  "resolved" "https://registry.npmjs.org/vuetify/-/vuetify-3.1.6.tgz"
+  "version" "3.1.6"
 
 "vuex@^4.1.0":
   "integrity" "sha512-hmV6UerDrPcgbSy9ORAtNXDr9M4wlNP4pEFKye4ujJF8oqgFFuxDCdOLS3eNoRTtq5O3hoBDh9Doj1bQMYHRbQ=="

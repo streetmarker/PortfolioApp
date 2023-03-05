@@ -1,12 +1,13 @@
 <template>
     <div>
-        <div v-if="process.env.NODE_ENV==='development'">
+        <!-- <div v-if="process.env.NODE_ENV==='development'">
             {{ this.counterObj }}
-        </div>
+        </div> -->
         <v-btn
         @click="bornTodayIds"
         stacked
-        variant="plain"
+        variant="outlined"
+        color="secondary"
         :disabled="disable">
         GET RANDOM ACTOR BORN TODAY {{ String(new Date().getDate()) }}/{{ String(new Date().getMonth()+1) }}</v-btn>
         <v-progress-linear
@@ -104,7 +105,7 @@ export default {
             const response = await this.$http
             .request(options)
             .then(function (response) {
-                console.log(response.data);
+                // console.log(response.data);
                 return response.data;
             })
             .catch(function (error) {
@@ -132,7 +133,7 @@ export default {
             const response = await this.$http
             .request(options)
             .then(function (response) {
-                console.log(response.data);
+                // console.log(response.data);
                 return response.data;
             })
             .catch(function (error) {

@@ -33,12 +33,12 @@ declare module 'vue/types/vue' {
 
     <v-navigation-drawer
     location='right'
-    image="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
     v-model="drawer">
     <v-list nav>
           <v-list-item prepend-icon="mdi-hospital"><router-link to="/landing">COVID-19 Report</router-link></v-list-item>
           <v-list-item prepend-icon="mdi-movie"><router-link to="/movies">Movies</router-link></v-list-item>
           <v-list-item prepend-icon="mdi-comment"><router-link to="/overallComm">Comments</router-link></v-list-item>
+          <v-list-item prepend-icon="mdi-bike"><router-link to="/bikes">Rent bike</router-link></v-list-item>
           <v-list-item prepend-icon="mdi-wrench-outline" title="Soon ..."></v-list-item>
           <v-list-item prepend-icon="mdi-wrench-outline" title="Soon ..."></v-list-item>
         </v-list>
@@ -106,6 +106,7 @@ export default defineComponent({
   methods: {
     onClick () {
       this.theme = this.theme === 'light' ? 'dark' : 'light'
+      // this.$vuetify.theme.themes.dark.anchor= '#8BC34A'
     },
     async clearFirestoreCounter(){
       const counterObj = await firestore.read();
@@ -136,9 +137,9 @@ a{
   text-decoration: none;
   color: inherit;
 }
-main{
+/* main{
   background-color: #8D6E63;
-}
+} */
 .status-bar {
   background-color: blue;
   color: hwb(106 0% 24%);

@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
+import 'vuetify/dist/vuetify.min.css';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { loadFonts } from './plugins/webfontloader'
